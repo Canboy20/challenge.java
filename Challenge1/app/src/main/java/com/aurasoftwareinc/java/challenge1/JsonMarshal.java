@@ -20,6 +20,9 @@ public class JsonMarshal
         // Todo: replace contents of this method with Your code.
         //
 
+
+
+
         JSONObject json = new JSONObject();
         JSONObject SubclassTypesJson = new JSONObject();
 
@@ -71,7 +74,6 @@ public class JsonMarshal
 
                     for (Field fieldVariable : fieldType.getDeclaredFields()) {
 
-                        Log.v("TEST","JSONTypes found! Horray!! ");
 
 
                         /*if (fieldVariable.getType().isAssignableFrom(Byte.TYPE)
@@ -140,11 +142,6 @@ public class JsonMarshal
 
 
 
-
-
-
-
-
                 }else if(fieldType == objectTypesObjectClass){
 
 
@@ -154,13 +151,7 @@ public class JsonMarshal
 
                     for (Field fieldVariable : fieldType.getDeclaredFields()) {
 
-/*
-                        if ((fieldVariable.getType().isAssignableFrom(Byte.class)
-                                || fieldVariable.getType().isAssignableFrom(Short.class)
-                                || fieldVariable.getType().isAssignableFrom(Integer.class)
-                                || fieldVariable.getType().isAssignableFrom(Long.class)
-                                || fieldVariable.getType().isAssignableFrom(Float.class)
-                                || fieldVariable.getType().isAssignableFrom(Double.class)))  {*/
+
 
 
                         if (true && !fieldVariable.getName().equals("serialVersionUID"))  {
@@ -219,7 +210,6 @@ public class JsonMarshal
 
 
                             //Field primShortField = fieldType.getDeclaredField("primShort");
-                            Log.v("TEST","JSONTypes found! Horray!! ");
 
                         }
 
@@ -273,76 +263,13 @@ public class JsonMarshal
                 }
 
 
-
-
-
-
-
-
-                /*
-                //get the static type of the field
-                Class<?> fieldType = field.getType();
-                //if it's String,
-                if (fieldType == String.class) {
-                    // save/use field
-                }
-                //if it's String[],
-                else if (fieldType == String[].class) {
-                    // save/use field
-                }
-                //if it's List or a subtype of List,
-                else if (List.class.isAssignableFrom(fieldType)) {
-                    //get the type as generic
-                    ParameterizedType fieldGenericType =
-                            (ParameterizedType)field.getGenericType();
-                    //get it's first type parameter
-                    Class<?> fieldTypeParameterType =
-                            (Class<?>)fieldGenericType.getActualTypeArguments()[0];
-                    //if the type parameter is String,
-                    if (fieldTypeParameterType == String.class) {
-                        // save/use field
-                    }
-                }*/
             }
 
 
 
 
             //Merge all Jsons into 1
-
             json.put(myObjectClass.getSimpleName(), SubclassTypesJson);
-            Log.v("TEST","JSONTypes found! Horray!! ");
-
-
-
-
-            // allows the object to access the field irrespective
-            // of the access specifier used with the field
-            //field.setAccessible(true);
-
-
-
-            /*
-            if(myObjectClass.getName().equals("JSONTypes")){
-
-                Log.v("TEST","JSONTypes found! Horray!! ");
-
-            }*/
-
-
-
-
-            //Method[] method = myObjectClass.getMethods();
-            //Method methodRef = myObjectClass.getMethod("method_name", String.class);
-            //Object returnValue = method.invoke(null, "parameter-value1");
-
-
-
-
-
-
-
-           // json.put("test", "dummy");
 
 
 
@@ -350,19 +277,24 @@ public class JsonMarshal
         catch (Exception ignore)
         {
 
-            Log.v("TEST","JSONTypes found! Horray!! ");
 
         }
 
         return json;
     }
 
+
+
+
+
+
+
+
     public static boolean unmarshalJSON(Object object, JSONObject json)
     {
         //
         // Todo: replace contents of this method with Your code.
         //
-        Log.v("TEST","JSONTypes found! Horray!! ");
 
 
         //Get class of object
@@ -370,32 +302,8 @@ public class JsonMarshal
         String nameOfClass = myObjectClass.getSimpleName();
 
 
-        //Get Fields of myObjectClass
-/*
-        Field primitiveTypesObjectField = myObjectClass.getDeclaredField("primitiveTypes");
-        Field objectTypesObjectField = myObjectClass.getDeclaredField("objectTypes");
-        Field jsonTypesObjectField = myObjectClass.getDeclaredField("jsonTypes");
-
-
-
-        //Get class of fields
-        Class primitiveTypesObjectClass = primitiveTypesObjectField.getType();
-        Class objectTypesObjectClass = objectTypesObjectField.getType();
-        Class jsonTypesObjectClass = jsonTypesObjectField.getType();
-
-
-
-        if(object instanceof  JsonMarshalInterface){
-            System.out.println(("width"));
-
-        }*/
-
 
         try {
-
-
-
-
 
 
             for (Field field : myObjectClass.getDeclaredFields()) {
@@ -515,7 +423,6 @@ public class JsonMarshal
                                 //field.set(object, json.getJSONArray(field.getName()) );
 
 
-                                System.out.println(("width"));
 
 
                             }else{
@@ -531,13 +438,7 @@ public class JsonMarshal
 
 
 
-
-                                System.out.println(("width"));
-
-
                             }
-
-
 
 
 
@@ -547,14 +448,9 @@ public class JsonMarshal
                     }
 
 
-                        //Field[]     objFields           =   obj.getClass().getFields();
-
                 }
 
 
-                //Card x =  (primitiveTypesObjectClass)field.get(object);
-
-                //unmarshalJSON(field,json);
 
             }
 
@@ -574,140 +470,8 @@ public class JsonMarshal
             e.printStackTrace();
         }
 
-
-/**WORKS**/
-/*
-
-        if(object instanceof  JsonMarshalInterface){
-            System.out.println(("width"));
-
-        }
-
-
-        try {
-
-
-            JSONObject jsonObject =  json.getJSONObject(nameOfClass);
-            JSONObject jsonTypesResponseData = null;
-
-
-
-            for (Field field : myObjectClass.getDeclaredFields()) {
-
-
-                //Will hold the classname of field that is currently being analyzed by Reflection
-                //Class<?> fieldType = field.getType();
-
-                Class primitiveTypesObjectClass = field.getType();
-                Class<?> referenceT  =   field.getClass();
-
-                String testName = field.getName();
-
-                if(testName.equals("jsonTypes")){
-
-                    jsonTypesResponseData = jsonObject.getJSONObject("jsonTypes");
-                    Class<?> reference  =   field.getType();
-                    Object obj =reference.newInstance();
-
-                    //Just in case its private
-                    field.setAccessible(true);
-
-                    //The value of the variable is null initially. We set a value to the variable by setting our previously created object to it
-                    field.set(object, obj);
-
-
-                    ((JSONTypes) obj).unmarshalJSON(jsonTypesResponseData);
-
-                    System.out.println(("width"));
-
-
-                    //Field[]     objFields           =   obj.getClass().getFields();
-
-
-                }
-
-
-
-
-
-
-
-
-                //Card x =  (primitiveTypesObjectClass)field.get(object);
-
-                //unmarshalJSON(field,json);
-
-
-
-
-            }
-
-
-        } catch (JSONException e) {
-
-            e.printStackTrace();
-
-
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        }
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-        /**WORKS**/
-        /*
-        JSONObject SubclassTypesResponseData = null;
-        JSONObject jsonTypesResponseData = null;
-        JSONObject objectTypesResponseData = null;
-        JSONObject primitiveTypesResponseData = null;
-
-
-        try {
-            SubclassTypesResponseData = json.getJSONObject("SubclassTypes");
-            jsonTypesResponseData = SubclassTypesResponseData.getJSONObject("jsonTypes");
-            objectTypesResponseData = SubclassTypesResponseData.getJSONObject("objectTypes");
-            primitiveTypesResponseData = SubclassTypesResponseData.getJSONObject("primitiveTypes");
-
-            Log.v("TEST","JSONTypes found! Horray!! ");
-
-
-
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }*/
-
-
-
-
-
-
-
-
-
-        /*
-        final JSONArray geodata = responseData.getJSONArray("results");
-        final int n = geodata.length();
-        for (int i = 0; i < n; ++i) {
-            final JSONObject person = geodata.getJSONObject(i);
-
-            System.out.println(person.geString("width"));
-        }*/
-
-
         return true;
+
+
     }
 }
